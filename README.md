@@ -1,6 +1,8 @@
 # Simple python fiducial tracker
 
 This piece of code uses OpenCV to detect the position of a marker in each frame captured by the video device. Based on the physical dimensions of the marker, it does pose estimation too. For each defined marker, data is available through UDP, in the form of plain text. It returns the translation of rotation of the object with respect to the camera, and the X-Y coordinates of the 2D centroid of the object appearing on the camera's image. If a marker is not visible, the returned numbers will be a NaN.  
+**Please note that this code does _NOT_ use temporal information for tracking.  
+Instead, it tries to detect the marker and estimate its pose in every captured frame.**
 # Main features
 * You can use **any** marker, a photo will suffice too
 * Every key setting is available in a config file, which is in the standard `.ini` syntax.
