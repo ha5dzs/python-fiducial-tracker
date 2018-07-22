@@ -1,0 +1,4 @@
+#Python files
+*.pyc
+#Effintosh
+/.DS_Strore

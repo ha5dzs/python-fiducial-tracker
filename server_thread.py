@@ -35,10 +35,11 @@ def tracker_server(port, shared_general_settings, shared_markers):
         data, sender_address = udp_socket.recvfrom(512) #this blocks code execution while waiting.
         if data:
             # If we have data, we should assemble the packet as plain text, like in a .csv file.
-            data_to_send.write("Marker name,Translation coordinates,Rotation angles,Marker centroid coordinates on the camera image\n")
+            data_to_send.write("Marker name,Translation coordinates,Rotation angles,Marker centroid coordinates on the camera image,Matchcounter,Framecounter\n")
             for i in range(0, general_settings["no_of_markers"]):
                 #Update to the latest marker data.
-                markers = shared_markers.get() #get the latest marker data created by the main thread
+                markers = shared_markers.get() # Get the latest marker data created by the main thread
+                general_settings = shared_general_settings.get() # We need this for the latest framecounter value
                 
                 #For each marker, we add to the string.
                 data_to_send.write(markers[i]["name_string"]) # This is specified as the section header in the config file
@@ -48,6 +49,11 @@ def tracker_server(port, shared_general_settings, shared_markers):
                 data_to_send.write(markers[i]["mean_rotation"]) # Rotation angles
                 data_to_send.write(",")
                 data_to_send.write(markers[i]["2d_centroid_mean"]) # Where the feature centroid is on the image
+                data_to_send.write(",")
+                #We need to convert these integers to strings first.
+                data_to_send.write(str(markers[i]["matchcounter"])) # This informs that how many data points the mean is calculated from
+                data_to_send.write(",")
+                data_to_send.write(str(general_settings["framecounter"])) # A global framecounter, counting up
                 data_to_send.write("\n")
 
             #Once the data has been gathered, send it back via the network.

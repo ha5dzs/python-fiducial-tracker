@@ -1,5 +1,6 @@
-% This code evaluates udp communication between the tracker and Matlab
-% udp() is in the instrument control toolbox.
+% This code evaluates udp communication between the tracker and Matlab.
+% The function 'udp()' is in the instrument control toolbox, so make sure it is
+% accessible.
 clear all
 clc
 

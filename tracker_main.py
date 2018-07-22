@@ -28,9 +28,6 @@ server_thread_handle.start() #Woohoo, start the server!
 
 
 
-
-
-
 #################################
 # Open camera, and create camera matrix and distortion coefficients
 camera = cv2.VideoCapture(general_settings["camera_id"])
@@ -55,7 +52,7 @@ for i in range(0, general_settings["no_of_markers"]):
     markers[i]["pixel_height"] = markers[i]["height"] / markers[i]["height_in_px"] #Height of one pixel
     # 3., Identify features (key_points and descriptors)
     markers[i]["key_points"], markers[i]["descriptors"] = feature_detector.detectAndCompute(markers[i]["image_data"], None) #Second argument is mask.
-    markers[i]["matchounter"] = 0 #this is used for the pose estimation.
+    markers[i]["matchcounter"] = 0 #this is used for the pose estimation.
     # 4., Initialise FIFOs for each marker pose data. Each FIFO length may be different.
     markers[i]["translation_fifo"] = deque(maxlen=markers[i]["fifo_length"])
     markers[i]["rotation_fifo"] = deque(maxlen=markers[i]["fifo_length"])
@@ -63,8 +60,7 @@ for i in range(0, general_settings["no_of_markers"]):
 
 #################################
 # Fetch image from camera. For each marker, do the feature matching and pose estimation.
-framecounter = np.uint64(0) #This is the number of frames since the start of the program
-markers[i]["matchcounter"] = np.int64(0) #If we lose the marker, this will be zeroed out.
+general_settings["framecounter"] = np.uint64(0) #This is the number of frames since the start of the program
 while(True):
     # Initialise the output arrays
     translations = [] #This is going to be the final result after the averaging
@@ -163,7 +159,7 @@ while(True):
             markers[i]["2d_centroid_mean"] = [np.nan, np.nan]
 
 
-    framecounter += 1 #Increment the framecounter value
+    general_settings["framecounter"] += 1 #Increment the framecounter value
 
     #Update the marker data, so the server thread can read it.
     markers_to_be_shared.put(markers)
