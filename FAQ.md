@@ -18,4 +18,4 @@ I only had two computers to try this code with. One was a mac, and the other was
 
 ## Q: Your code is ugly. What were you thinking?
 Well, thanks :)  
-I did have to take a lot of very strong painkillers, most of them were opiates. So there you go, I wrote ugly code because I was high on drugs. What's your excuse?
+I wrote this while recovering from an operation. I did have to take a lot of very strong painkillers, most of them were opiates. So there you go, I wrote ugly code because I was high on drugs. What's your excuse?
